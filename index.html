@@ -13,8 +13,168 @@ input[type=text],input[type=date],input[type=number],textarea,select{width:100%;
 table{width:100%;border-collapse:collapse;font-size:10px;margin:5px 0 8px}th,td{border:1px solid var(--line);padding:5px;vertical-align:middle}th{background:var(--mint);color:var(--g);text-align:left;font-size:9px;text-transform:uppercase}td.center,th.center{text-align:center;width:42px}.box{display:inline-block;width:12px;height:12px;border:1px solid #829087;border-radius:2px}.blank td{height:25px}.note{background:var(--stone);border-left:3px solid #b7b4a7;border-radius:0 5px 5px 0;padding:7px 9px;font-size:10px;margin:8px 0}.note.green{background:#edf4ef;border-left-color:var(--g2)}.footer{display:flex;justify-content:space-between;gap:8px;border-top:1px solid var(--line);padding-top:7px;margin-top:15px;color:#758178;font-size:9px}
 @media(max-width:780px){.app{display:block}aside{height:auto;position:relative;padding:12px}.brand{padding-bottom:8px;margin-bottom:5px}.brand h1{font-size:19px}.nav{display:flex;overflow:auto;gap:4px}.navlabel,.sidefoot{display:none}.nav button{white-space:nowrap;width:auto;flex:0 0 auto}main{padding:12px}.ficha{padding:15px;min-height:0}.field,.field.s2,.field.s3,.field.s6,.field.s8{grid-column:span 6}}
 @page{size:A4 portrait;margin:10mm}
-@media print{html,body{background:white!important;margin:0!important;font-size:10pt}.app{display:block}aside,.toolbar{display:none!important}main{padding:0!important}.ficha{display:none!important;box-shadow:none!important;border-radius:0!important;min-height:0!important;max-width:none!important;margin:0!important;padding:0!important}.printing .ficha.print-target{display:block!important}.printing .ficha.print-target .sheet-side{break-after:auto!important;page-break-after:auto!important;min-height:0!important;margin:0!important}.printing .ficha.print-target.duplex .sheet-side:nth-of-type(3){break-before:page;page-break-before:always;break-inside:avoid;page-break-inside:avoid}.hero{border-radius:0;padding:11px 14px;margin-bottom:9px;print-color-adjust:exact;-webkit-print-color-adjust:exact}.hero h2{font-size:18pt}.hero p{font-size:8pt}.stitle{margin:9px 0 5px;font-size:8pt}.grid{gap:5px 8px}.field{grid-column:span 4}.field.s2{grid-column:span 2}.field.s3{grid-column:span 3}.field.s6{grid-column:span 6}.field.s8{grid-column:span 8}.field.full{grid-column:1/-1}label{font-size:7pt}input[type=text],input[type=date],input[type=number],textarea,select{font-size:8pt;padding:3px 2px}table{font-size:7.5pt;margin:3px 0 5px}th{font-size:7pt}th,td{padding:3px}.blank td{height:21px}.note{font-size:7pt;padding:5px 7px;margin:5px 0}.badge{font-size:7pt;margin-bottom:5px}.footer{font-size:7pt;margin-top:8px}.duplex .sheet-side{padding:0 1mm}.duplex .stitle{margin:7px 0 4px}.duplex table{font-size:7pt;margin:2px 0 4px}.duplex th,.duplex td{padding:2px}.duplex .note{font-size:6.5pt;padding:4px 6px;margin:4px 0}.duplex .grid{gap:3px 6px}}
-</style></head><body><div class="app">
+
+/* Aviso de visita: seis bilhetes por folha A4, com campos editáveis */
+.aviso-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:10px;margin-top:12px}
+.aviso-card{min-height:245px;border:1px dashed #9eaaa1;border-radius:9px;padding:12px 13px;background:#fff;display:flex;flex-direction:column;justify-content:space-between;break-inside:avoid;page-break-inside:avoid}
+.aviso-top{border-bottom:2px solid var(--g);padding-bottom:6px;margin-bottom:7px}
+.aviso-kicker{font-size:8px;letter-spacing:1px;text-transform:uppercase;color:#637168;font-weight:bold}
+.aviso-title{font-size:14px;line-height:1.1;color:var(--g);font-weight:800;margin:4px 0}
+.aviso-message{font-size:9px;line-height:1.35;color:var(--ink);margin:5px 0}
+.aviso-input{font:inherit;color:var(--ink);background:transparent;border:0;border-bottom:1px solid #87948a;border-radius:0;padding:1px 2px;min-width:0;outline:none}
+.aviso-input:focus{background:#f1f6f2;border-bottom:2px solid var(--g2)}
+.aviso-date{width:78px}.aviso-hour{width:43px}
+.aviso-checks{display:grid;grid-template-columns:1fr 1fr;gap:4px 8px;margin:6px 0;font-size:8px;line-height:1.2}
+.aviso-checks label{display:flex;align-items:flex-start;gap:4px}
+.aviso-checks input{width:11px;height:11px;margin:0;accent-color:var(--g);flex:0 0 11px}
+.aviso-noanswer{font-weight:700;margin-top:5px}
+.aviso-highlight{background:var(--mint);border-left:3px solid var(--g2);padding:5px 7px;border-radius:0 5px 5px 0;font-size:8px;line-height:1.25;margin:5px 0}
+.aviso-details{border-top:1px solid #dce3dc;padding-top:5px;margin-top:6px}
+.aviso-contact-title{font-size:8px;font-weight:800;color:var(--g);margin-bottom:3px}
+.aviso-field{display:flex;align-items:baseline;gap:4px;font-size:8px;line-height:1.5;margin:1px 0}
+.aviso-field b{white-space:nowrap}
+.aviso-fixed-phone{font-weight:700;letter-spacing:.2px}
+.aviso-field .aviso-input{flex:1;width:100%;font-size:8px}
+.aviso-input::placeholder{color:#a1aaa3;opacity:1}
+
+/* Cartão de apresentação do ACS */
+.apresentacao-intro{margin-bottom:12px}
+.apresentacao-stack{display:grid;gap:12px}
+.apresentacao-card{position:relative;isolation:isolate;overflow:hidden;min-height:430px;border:1px solid #d6e2d7;border-radius:18px;padding:25px 28px;background:linear-gradient(135deg,#fbfcf7 0%,#f1f6ed 58%,#e3efe4 100%);box-shadow:0 5px 18px #263b2d12;display:flex;flex-direction:column;justify-content:space-between}
+.apresentacao-card:before{content:"";position:absolute;z-index:-1;right:-55px;top:-85px;width:270px;height:230px;border-radius:48% 52% 55% 45%;background:#dcebd8;transform:rotate(-18deg)}
+.apresentacao-card:after{content:"";position:absolute;z-index:-1;left:-70px;bottom:-110px;width:260px;height:210px;border-radius:50%;background:#e1eddf}
+.apres-top{display:flex;justify-content:space-between;align-items:center;gap:14px}
+.apres-brand{display:flex;align-items:center;gap:10px;color:var(--g);font-weight:800;font-size:12px;line-height:1.2;letter-spacing:.3px}
+.apres-symbol{width:48px;height:48px;border-radius:15px;background:var(--g);color:white;display:grid;place-items:center;font-size:25px;box-shadow:0 4px 10px #245b4925}
+.apres-greeting{background:var(--g);color:white;border-radius:30px 30px 8px 30px;padding:10px 18px;font-size:23px;font-weight:800;letter-spacing:-.5px;white-space:nowrap}
+.apres-eyebrow{font-size:10px;letter-spacing:1.5px;text-transform:uppercase;color:#688071;font-weight:800;margin:17px 0 5px}
+.apres-heading{font-size:25px;line-height:1.08;color:#183e30;font-weight:800;max-width:650px;margin:0}
+.apres-subtitle{font-size:13px;line-height:1.5;color:#405449;margin:9px 0 14px;max-width:650px}
+.apres-name{display:flex;align-items:center;gap:12px;background:#e5efe1;border:1px solid #d3e2d1;border-radius:12px;padding:11px 14px;margin:2px 0 14px}
+.apres-name-icon{font-size:22px;color:var(--g)}
+.apres-name-label{font-size:11px;color:#42604e;font-weight:800;white-space:nowrap}
+.apres-name input,.apres-phone input{font:inherit;color:#1d3c2e;background:transparent;border:0;border-bottom:1.5px solid #6f8c77;border-radius:0;outline:none;padding:4px 3px;min-width:0}
+.apres-name input{flex:1;font-size:17px;font-weight:700}
+.apres-name input:focus,.apres-phone input:focus{background:#f6faf4;border-bottom:2px solid var(--g)}
+.apres-body{display:grid;grid-template-columns:1.5fr 1fr;gap:16px;align-items:stretch}
+.apres-copy{font-size:12px;line-height:1.55;color:#35483d;padding:3px 2px}
+.apres-copy strong{color:var(--g)}
+.apres-frequency{background:#fff;border:1px solid #d8e4d7;border-radius:12px;padding:12px;text-align:center;display:flex;flex-direction:column;justify-content:center}
+.apres-frequency .symbol{font-size:24px;color:var(--g);line-height:1;margin-bottom:5px}
+.apres-frequency p{font-size:11px;line-height:1.35;color:#43594a;margin:0}
+.apres-frequency strong{font-size:13px;color:var(--g)}
+.apres-contact{margin-top:14px;background:var(--g);color:white;border-radius:12px;padding:11px 14px;display:grid;grid-template-columns:1fr 1fr;gap:12px;align-items:center}
+.apres-contact-label{font-size:9px;letter-spacing:1px;text-transform:uppercase;color:#dcebe0;font-weight:800}
+.apres-phone{display:flex;align-items:center;gap:7px;font-size:12px;font-weight:700;margin-top:3px}
+.apres-phone input{width:100%;font-size:14px;color:white;border-bottom-color:#b8d0bf}
+.apres-phone input::placeholder{color:#d4e4d8}
+.apres-ubs{border-left:1px solid #ffffff55;padding-left:14px}
+.apres-ubs strong{display:block;font-size:16px;letter-spacing:.5px;margin-top:3px}
+.apres-footnote{font-size:8px;color:#6b7d70;text-align:right;margin-top:7px}
+@media(max-width:780px){.apresentacao-card{padding:19px;min-height:0}.apres-greeting{font-size:17px}.apres-heading{font-size:21px}.apres-body{grid-template-columns:1fr}.apres-contact{grid-template-columns:1fr}.apres-ubs{border-left:0;border-top:1px solid #ffffff55;padding:8px 0 0}}
+@media(max-width:780px){.aviso-grid{grid-template-columns:1fr}.aviso-card{min-height:220px}}
+
+@media print{
+@page{size:A4 portrait;margin:10mm}
+.printing .ficha.print-target.apresentacao{-webkit-print-color-adjust:exact!important;print-color-adjust:exact!important;display:block!important;position:relative!important;box-sizing:border-box!important;width:190mm!important;max-width:190mm!important;height:277mm!important;min-height:0!important;margin:0!important;padding:0!important;overflow:hidden!important;background:#fff!important}
+.printing .ficha.print-target.apresentacao>.hero,
+.printing .ficha.print-target.apresentacao>.footer,
+.printing .ficha.print-target.apresentacao .apresentacao-intro{display:none!important}
+.printing .ficha.print-target.apresentacao .apresentacao-stack{display:grid!important;box-sizing:border-box!important;width:190mm!important;height:277mm!important;margin:0!important;padding:0!important;grid-template-columns:1fr!important;grid-template-rows:repeat(4,1fr)!important;gap:3mm!important;align-content:stretch!important}
+.printing .ficha.print-target.apresentacao .apresentacao-card{display:flex!important;box-sizing:border-box!important;width:auto!important;height:auto!important;min-width:0!important;min-height:0!important;max-height:none!important;margin:0!important;padding:3mm 3.5mm!important;border:1px solid #cbdccf!important;border-radius:3mm!important;box-shadow:none!important;overflow:hidden!important;break-inside:avoid!important;page-break-inside:avoid!important}
+.printing .ficha.print-target.apresentacao .apresentacao-card{background:linear-gradient(120deg,#fbfcf7 0%,#eef5eb 100%)!important}
+.printing .ficha.print-target.apresentacao .apresentacao-card:before{display:block!important;content:""!important;position:absolute!important;z-index:-1!important;right:-18mm!important;top:-17mm!important;width:55mm!important;height:42mm!important;background:#dcebd8!important;border-radius:48% 52% 55% 45%!important;transform:rotate(-18deg)!important}
+.printing .ficha.print-target.apresentacao .apresentacao-card:after{display:block!important;content:""!important;position:absolute!important;z-index:-1!important;left:-15mm!important;bottom:-19mm!important;width:48mm!important;height:38mm!important;background:#e1eddf!important;border-radius:50%!important}
+.printing .ficha.print-target.apresentacao .apres-symbol,
+.printing .ficha.print-target.apresentacao .apres-greeting,
+.printing .ficha.print-target.apresentacao .apres-contact{background:#245b49!important;color:#fff!important;-webkit-print-color-adjust:exact!important;print-color-adjust:exact!important}
+.printing .ficha.print-target.apresentacao .apres-name{background:#e5efe1!important;border-color:#d3e2d1!important}
+.printing .ficha.print-target.apresentacao .apres-frequency{background:#fff!important;border-color:#d8e4d7!important}
+.printing .ficha.print-target.apresentacao .apres-heading{color:#183e30!important}
+.printing .ficha.print-target.apresentacao .apres-eyebrow{color:#52735e!important}
+.printing .ficha.print-target.apresentacao .apres-copy{color:#35483d!important}
+.printing .ficha.print-target.apresentacao .apres-contact-label{color:#dcebe0!important}
+.printing .ficha.print-target.apresentacao .apres-phone input{color:#fff!important;border-bottom-color:#b8d0bf!important}
+
+.printing .ficha.print-target.apresentacao .apres-top{gap:4px!important}
+.printing .ficha.print-target.apresentacao .apres-brand{font-size:6.5pt!important;gap:4px!important}
+.printing .ficha.print-target.apresentacao .apres-symbol{width:25px!important;height:25px!important;border-radius:7px!important;font-size:14px!important}
+.printing .ficha.print-target.apresentacao .apres-heading{font-size:8pt!important;line-height:1.08!important}
+.printing .ficha.print-target.apresentacao .apres-eyebrow{font-size:5pt!important;margin:4px 0 2px!important;letter-spacing:.5px!important}
+.printing .ficha.print-target.apresentacao .apres-subtitle{font-size:5.5pt!important;line-height:1.15!important;margin:2px 0 3px!important}
+.printing .ficha.print-target.apresentacao .apres-greeting{font-size:8pt!important;padding:4px 6px!important}
+.printing .ficha.print-target.apresentacao .apres-name{gap:4px!important;padding:3px 5px!important;margin:2px 0 3px!important}
+.printing .ficha.print-target.apresentacao .apres-name-icon{font-size:12px!important}
+.printing .ficha.print-target.apresentacao .apres-name-label{font-size:6.5pt!important}
+.printing .ficha.print-target.apresentacao .apres-name input{font-size:7pt!important;color:#183e30!important;border-bottom:1px solid #6f8c77!important}
+.printing .ficha.print-target.apresentacao .apres-body{grid-template-columns:1.3fr 1fr!important;gap:4px!important}
+.printing .ficha.print-target.apresentacao .apres-copy{font-size:5.5pt!important;line-height:1.2!important}
+.printing .ficha.print-target.apresentacao .apres-frequency{padding:4px!important}
+.printing .ficha.print-target.apresentacao .apres-frequency .symbol{font-size:14px!important;margin-bottom:2px!important}
+.printing .ficha.print-target.apresentacao .apres-frequency p{font-size:5.5pt!important;line-height:1.15!important}
+.printing .ficha.print-target.apresentacao .apres-frequency strong{font-size:6pt!important}
+.printing .ficha.print-target.apresentacao .apres-contact{padding:3px 4px!important;margin-top:3px!important;gap:3px!important}
+.printing .ficha.print-target.apresentacao .apres-contact-label{font-size:5pt!important}
+.printing .ficha.print-target.apresentacao .apres-phone{font-size:6pt!important;gap:3px!important}
+.printing .ficha.print-target.apresentacao .apres-phone input{font-size:6pt!important}
+.printing .ficha.print-target.apresentacao .apres-ubs{padding-left:5px!important}
+.printing .ficha.print-target.apresentacao .apres-ubs strong{font-size:7pt!important}
+.printing .ficha.print-target.apresentacao .apres-footnote{font-size:4pt!important;margin-top:1px!important}
+}
+@media print{html,body{background:white!important;margin:0!important;font-size:10pt}.app{display:block}aside,.toolbar{display:none!important}main{padding:0!important}.ficha{display:none!important;box-shadow:none!important;border-radius:0!important;min-height:0!important;max-width:none!important;margin:0!important;padding:0!important}.printing .ficha.print-target.aviso{max-width:none!important;width:100%!important;padding:0!important;margin:0!important;min-height:0!important}
+.printing .ficha.print-target.aviso>.hero,.printing .ficha.print-target.aviso>.footer{display:none!important}
+.printing .ficha.print-target.aviso .aviso-intro{display:none!important}
+.printing .ficha.print-target.aviso .aviso-grid{grid-template-columns:repeat(2,minmax(0,1fr));grid-template-rows:repeat(3,1fr);gap:0;margin:0;width:100%;height:277mm}
+.printing .ficha.print-target.aviso .aviso-card{box-sizing:border-box;width:100%;height:92.3mm;min-height:0;border:1px dashed #9eaaa1;border-radius:0;padding:4mm 4.5mm 3.5mm;box-shadow:none;overflow:hidden}
+.printing .ficha.print-target.aviso .aviso-title{font-size:9pt;margin:2px 0}
+.printing .ficha.print-target.aviso .aviso-message{font-size:6.2pt;line-height:1.2;margin:3px 0}
+.printing .ficha.print-target.aviso .aviso-checks{font-size:5.8pt;gap:2px 5px;margin:3px 0}
+.printing .ficha.print-target.aviso .aviso-checks input{width:9px;height:9px;flex-basis:9px}
+.printing .ficha.print-target.aviso .aviso-highlight{font-size:5.8pt;line-height:1.18;padding:3px 5px;margin:3px 0}
+.printing .ficha.print-target.aviso .aviso-contact-title,.printing .ficha.print-target.aviso .aviso-field{font-size:5.8pt}
+.printing .ficha.print-target.aviso .aviso-field .aviso-input{font-size:5.8pt}
+.printing .ficha.print-target.aviso .aviso-input:focus{background:transparent}
+.printing .ficha.print-target.aviso .aviso-cut{display:none}
+.printing .ficha.print-target{display:block!important}.printing .ficha.print-target .sheet-side{break-after:auto!important;page-break-after:auto!important;min-height:0!important;margin:0!important}.printing .ficha.print-target.duplex .sheet-side:nth-of-type(3){break-before:page;page-break-before:always;break-inside:avoid;page-break-inside:avoid}.printing .ficha.print-target.alertas .sheet-side + .sheet-side{break-before:page;page-break-before:always;break-inside:avoid;page-break-inside:avoid}}
+.alertas .sheet-side{margin:0 0 18px;padding:14px 16px;border:1px solid #d7ded6;border-radius:12px;background:#fff}
+.alertas .alert-group{border:1px solid #cbd4cc;border-radius:10px;overflow:hidden;margin:13px 0 16px;break-inside:avoid;page-break-inside:avoid;background:#fff;box-shadow:0 2px 6px #263b2d0a}
+.alertas .alert-head{display:flex;align-items:center;gap:9px;background:#245b49;color:white;font-weight:800;font-size:13px;letter-spacing:.25px;padding:10px 13px}
+.alertas .category-mark{width:7px;height:20px;border-radius:4px;background:#c6d8c9;flex:0 0 7px}
+.alertas .alert-section.same-day{background:#f4f8f4}
+.alertas .alert-section.emergency{background:#f7f0e7;border-top:2px solid #b4864e}
+.alertas .alert-subhead{display:flex;align-items:center;gap:7px;font-weight:800;font-size:9px;letter-spacing:.55px;padding:8px 12px;color:#245b49;border-bottom:1px solid #dce5dc}
+.alertas .emergency .alert-subhead{color:#875b2f;border-bottom-color:#e8d8c4}
+.alertas .section-mark{width:7px;height:7px;border-radius:50%;background:#6c927a;flex:0 0 7px}
+.alertas .emergency .section-mark{background:#b4864e}
+.alertas .alert-list{padding:6px 13px 7px}
+.alertas .alert-item{display:flex;gap:10px;align-items:flex-start;padding:6px 1px;font-size:11px;line-height:1.32;border-bottom:1px solid #e7ede7;color:#26352d}
+.alertas .alert-item:last-child{border-bottom:0}
+.alertas .alert-check{flex:0 0 15px;width:15px;height:15px;border:1.5px solid #668273;border-radius:3px;margin-top:0;background:#fff}
+.alertas .emergency .alert-item{border-bottom-color:#eadfD2}
+.alertas .emergency .alert-check{border-color:#a77a47}
+.alertas .alert-guidance{font-size:9px;line-height:1.35;font-weight:bold;color:#76502c;padding:3px 13px 9px}
+.alertas .alert-instructions{font-size:9px;line-height:1.4;background:#e8f1eb;border-left:3px solid #36745d;border-radius:0 5px 5px 0;padding:7px 9px;margin:8px 0}
+.alertas .quick-record{display:flex;align-items:center;gap:14px;flex-wrap:wrap;border:1px solid #cbd4cc;border-radius:7px;padding:8px 10px;margin:10px 0;background:#fafbf9;font-size:9px;color:#435248}
+.alertas .quick-record b{color:#245b49;font-size:9px;letter-spacing:.4px}
+.alertas .stitle{margin-top:12px}
+.alertas .footer{margin-top:10px}
+@media print{
+.alertas .sheet-side{padding:0 1mm;border:0;border-radius:0;margin:0}
+.alertas .alert-group{margin:6px 0 9px;border-radius:6px;box-shadow:none}
+.alertas .alert-head{font-size:9pt;padding:5px 8px}
+.alertas .category-mark{height:14px;width:5px;flex-basis:5px}
+.alertas .alert-subhead{font-size:7pt;padding:4px 8px}
+.alertas .section-mark{width:5px;height:5px;flex-basis:5px}
+.alertas .alert-list{padding:3px 8px 4px}
+.alertas .alert-item{font-size:7.5pt;padding:3px 1px;line-height:1.2;gap:7px}
+.alertas .alert-check{width:11px;height:11px;flex-basis:11px}
+.alertas .alert-guidance{font-size:6.5pt;padding:2px 8px 5px}
+.alertas .alert-instructions{font-size:7pt;padding:4px 6px;margin:4px 0}
+.alertas .quick-record{font-size:6.5pt;padding:4px 6px;margin:5px 0}
+.alertas .quick-record b{font-size:6.5pt}
+.alertas .stitle{margin:6px 0 4px}
+.alertas .badge{font-size:6.5pt;margin-bottom:3px}
+}</style></head><body><div class="app">
 <aside><div class="brand"><small>Material de campo</small><h1>Fichário do ACS</h1><p>Fichas independentes • papel A4 • imprima só o que precisar</p></div>
 <nav class="nav">
 <div class="navlabel">Território</div>
@@ -25,8 +185,8 @@ table{width:100%;border-collapse:collapse;font-size:10px;margin:5px 0 8px}th,td{
 <button data-id="c3">Gestação e puerpério <span class="tag">C3</span></button>
 <button data-id="diabetes">Diabetes <span class="tag">C4</span></button><button data-id="hipertensao">Hipertensão <span class="tag">C5</span></button>
 <button data-id="idosa">Pessoa idosa <span class="tag">C6</span></button><button data-id="mulher">Saúde da mulher <span class="tag">C7</span></button>
-<div class="navlabel">Acompanhamento complementar</div><button data-id="domiciliada">Acamada/domiciliada</button></nav>
-<div class="sidefoot">Sem ficha C1. Cada ficha pode ser impressa separadamente. As fichas focam observação, orientação, busca ativa, registro de visita e comunicação à equipe.</div></aside>
+<div class="navlabel">Acompanhamento complementar</div><button data-id="domiciliada">Acamada/domiciliada</button><button data-id="alertas">Sinais de alerta e urgência</button><button data-id="aviso">Aviso de visita</button><button data-id="apresentacao">Cartão de apresentação</button></nav>
+</aside>
 <main><div class="toolbar"><div class="hint">Selecione uma ficha no menu. Na impressão, somente a ficha aberta será enviada para a impressora ou PDF.</div><div class="actions"><button class="action" onclick="limpar()">Limpar ficha</button><button class="action primary" onclick="printCurrent()">Imprimir ficha atual</button></div></div>
 <div id="pages"></div></main></div>
 <script>
@@ -37,7 +197,7 @@ const title=t=>`<div class="stitle">${t}</div>`;
 const table=(headers,rows,cls='')=>`<table class="${cls}"><thead><tr>${headers.map((h,i)=>`<th ${i>0&&h==='OK'||h==='Pendente'?'class="center"':''}>${h}</th>`).join('')}</tr></thead><tbody>${rows.map(r=>`<tr>${r.map((c,i)=>`<td ${i>0&&(c==='□'||c==='☐')?'class="center"':''}>${c}</td>`).join('')}</tr>`).join('')}</tbody></table>`;
 const checkRows=items=>table(['Meta / ponto a acompanhar','OK','Pendente','Data / observação'],items.map((x,i)=>[String.fromCharCode(65+i)+') '+x,'<span class="box"></span>','<span class="box"></span>','']));
 const visitRows=(n=5)=>table(['Data','Relato / orientação / observação','Ação ou retorno combinado'],Array.from({length:n},()=>['','','']),'blank');
-const ficha=(id,kicker,name,desc,body)=>`<section class="ficha ${id==='familia'?'active':''} ${['c2','c3'].includes(id)?'duplex':''}" id="${id}" data-title="${name}"><div class="hero"><small>${kicker}</small><h2>${name}</h2><p>${desc}</p></div>${body}<div class="footer"><span>Fichário de campo do ACS • material de apoio</span><span>${name}</span></div></section>`;
+const ficha=(id,kicker,name,desc,body)=>`<section class="ficha ${id==='familia'?'active':''} ${['c2','c3'].includes(id)?'duplex':''} ${id==='alertas'?'alertas':''} ${id==='aviso'?'aviso':''} ${id==='apresentacao'?'apresentacao':''}" id="${id}" data-title="${name}"><div class="hero"><small>${kicker}</small><h2>${name}</h2><p>${desc}</p></div>${body}<div class="footer"><span>Fichário de campo do ACS • material de apoio</span><span>${name}</span></div></section>`;
 const idFields=()=>`<div class="grid">${field('Nome da pessoa / referência','s6')}${datefield('Data da visita / atualização','s3')}${field('Microárea','s3')}${field('Endereço / contato','s6')}${field('UBS / equipe','s3')}${field('Contato de referência (se necessário)','s3')}</div>`;
 const family=`<span class="badge">Ficha-base da família</span>${title('Identificação e localização')}<div class="grid">${field('Responsável familiar / referência','s8')}${datefield('Data de atualização','s4')}${field('Rua / localidade','s6')}${field('Número / complemento','s3')}${field('Microárea','s3')}${field('UBS / equipe','s3')}${field('Telefone de contato','s3')}${field('Referência do cadastro familiar','s3')}${datefield('Data da visita inicial','s3')}</div>${title('Composição familiar')}${table(['Nome','Nascimento / idade','Vínculo','Observação relevante'],Array.from({length:6},()=>['','','','']),'blank')}${title('Condições do domicílio e contexto familiar')}<div class="grid">${area('Condições de moradia / saneamento observadas','s6')}${area('Rede de apoio / cuidador de referência (se houver)','s6')}${area('Barreiras de acesso / vulnerabilidades observadas','s6')}${area('Necessidades relatadas pela família','s6')}</div>${title('Organização do acompanhamento')}${table(['Data','Tipo de contato','Resumo objetivo da visita/contato','Próximo passo'],Array.from({length:4},()=>['','','','']),'blank')}<div class="note green">Registre fatos observados e informações relatadas, respeitando o sigilo. Dados clínicos e procedimentos ficam nos sistemas/prontuários próprios dos profissionais responsáveis.</div>`;
 const equipe=`${idFields()}${title('Motivo da comunicação')}<table><tbody>${[['Falta à consulta / dificuldade de acesso','Necessidade de visita / busca ativa'],['Gestação, puerpério ou criança com acompanhamento pendente','Condição crônica / acompanhamento pendente'],['Possível vulnerabilidade ou risco social','Dificuldade com orientação ou acesso a serviço'],['Alteração relatada/observada que precisa de avaliação profissional','Outro motivo']].map(r=>`<tr>${r.map(x=>`<td>${x} &nbsp; <span class="box"></span></td>`).join('')}</tr>`).join('')}</tbody></table>${title('Descrição objetiva — relato/observação do ACS')}<div class="grid">${area('O que foi relatado ou observado? Quando? Por quem?','full')}${area('Ações já realizadas pelo ACS (orientação, tentativa de contato, visita, busca ativa etc.)','full')}${field('Data e forma de comunicação','s6')}${field('Profissional / setor comunicado','s6')}</div>${title('Retorno e plano combinado com a equipe')}<div class="grid">${area('Orientação / encaminhamento / responsável pela próxima ação','full')}${field('Prazo / data de retorno combinado','s6')}${datefield('Data em que o ACS verificou o retorno','s6')}${area('Desfecho / pendência atual','full')}</div><div class="note">Em situações de urgência ou risco imediato, siga o fluxo local e comunique a equipe/serviço apropriado sem aguardar o preenchimento. O ACS comunica e acompanha; não substitui avaliação clínica.</div>`;
@@ -92,6 +252,192 @@ const c3unico = `
  <div class="note">Aborde assuntos sensíveis com privacidade e respeito. Em situações que precisem de avaliação profissional, siga o fluxo local e comunique a equipe. Esta ficha não substitui os registros clínicos.</div>
 </div>`;
 
+
+const alertGroup=(name,items,urgent=[])=>`<div class="alert-group">
+  <div class="alert-head"><span class="category-mark"></span><span>${name}</span></div>
+  <div class="alert-section same-day">
+    <div class="alert-subhead"><span class="section-mark"></span>AVISAR A EQUIPE NO MESMO DIA</div>
+    <div class="alert-list">${items.map(x=>`<div class="alert-item"><span class="alert-check"></span><span>${x}</span></div>`).join('')}</div>
+  </div>
+  ${urgent.length?`<div class="alert-section emergency">
+    <div class="alert-subhead"><span class="section-mark"></span>URGÊNCIA — NÃO ESPERAR</div>
+    <div class="alert-list">${urgent.map(x=>`<div class="alert-item"><span class="alert-check"></span><span>${x}</span></div>`).join('')}</div>
+    <div class="alert-guidance">Orientar a procura imediata do serviço de urgência ou ligar 192. Avisar a equipe também.</div>
+  </div>`:''}
+</div>`;
+const alertas=`<div class="sheet-side alert-page">
+  <span class="badge">Sinais de alerta • página 1 de 4</span>
+  ${title('Identificação da visita')}
+  <div class="grid">${field('Nome da pessoa / referência','s6')}${datefield('Data da visita','s3')}${field('Microárea','s3')}${field('Endereço / localidade','s6')}${field('ACS','s3')}${field('UBS / equipe','s3')}</div>
+  <div class="alert-instructions"><b>Como usar:</b> marque os quadrinhos dos sinais que você viu ou ouviu. Na primeira seção, comunique à equipe no mesmo dia. Na seção de urgência, oriente a procura imediata do serviço de urgência ou ligue 192 e avise a equipe — não espere terminar o preenchimento.</div>
+  ${alertGroup('GESTANTE',[
+    'Faltou à consulta de pré-natal ou ao exame marcado',
+    'Inchaço muito grande nos pés, nas pernas ou no rosto',
+    'Dor ou ardor ao urinar',
+    'Corrimento escuro (marrom ou preto)',
+    'Pressão alta informada pela própria gestante ou anotada na caderneta',
+    'Sem caderneta ou sem data da próxima consulta'
+  ],[
+    'Sangramento ou perda de líquido pela vagina',
+    'Dor de cabeça forte com visão embaçada ou “estrelinhas”',
+    'Bebê parou de mexer há mais de 12 horas',
+    'Contrações fortes, dolorosas e frequentes'
+  ])}
+  ${alertGroup('PUÉRPERA',[
+    'Febre',
+    'Dor na parte baixa da barriga',
+    'Sangramento com cheiro ruim',
+    'Mama vermelha, dura ou dolorida',
+    'Tristeza intensa, choro constante ou dificuldade de cuidar do bebê',
+    'Sem consulta de puerpério marcada'
+  ],[
+    'Sangramento que aumenta muito',
+    'Febre alta com mal-estar forte'
+  ])}
+  <div class="footer"><span>Fichário de campo do ACS • material de apoio</span><span>Sinais de alerta • página 1 de 4</span></div>
+</div>
+<div class="sheet-side alert-page">
+  <span class="badge">Sinais de alerta • página 2 de 4</span>
+  ${alertGroup('RECÉM-NASCIDO E CRIANÇA',[
+    'Vacina atrasada na caderneta',
+    'Consulta de acompanhamento perdida',
+    'Febre (37,5 °C ou mais) ou temperatura muito baixa no bebê',
+    'Pele ou olhos amarelados no recém-nascido',
+    'Secreção com pus no ouvido ou no umbigo',
+    'Manchas avermelhadas ou arroxeadas na pele'
+  ],[
+    'Não consegue mamar ou beber',
+    'Vomita tudo o que come ou bebe',
+    'Convulsão, criança molinha ou muito sonolenta, difícil de acordar',
+    'Respiração rápida ou com dificuldade'
+  ])}
+  ${alertGroup('PESSOA COM HIPERTENSÃO',[
+    'Sem consulta nos últimos 6 meses',
+    'Parou de usar o remédio receitado ou está usando diferente',
+    'Dor de cabeça forte e fora do comum',
+    'Tontura ou visão turva',
+    'Inchaço nas pernas',
+    'Pressão alta anotada em medição recente'
+  ],[
+    'Dor ou aperto no peito',
+    'Falta de ar forte',
+    'Boca torta, fala enrolada ou fraqueza de um lado do corpo',
+    'Desmaio'
+  ])}
+  <div class="footer"><span>Fichário de campo do ACS • material de apoio</span><span>Sinais de alerta • página 2 de 4</span></div>
+</div>
+<div class="sheet-side alert-page">
+  <span class="badge">Sinais de alerta • página 3 de 4</span>
+  ${alertGroup('PESSOA COM DIABETES',[
+    'Ferida, bolha ou calo no pé que não sara',
+    'Pé dormente ou sem sensibilidade',
+    'Tremor, suor frio, palpitação ou fome forte nos últimos dias',
+    'Tontura, fraqueza ou cansaço fora do comum',
+    'Sem exame de hemoglobina glicada no último ano',
+    'Sem avaliação dos pés no último ano'
+  ],[
+    'Confusão, fala arrastada ou comportamento estranho com suor frio',
+    'Pessoa desacordada ou muito difícil de acordar'
+  ])}
+  ${alertGroup('PESSOA IDOSA',[
+    'Caiu desde a última visita',
+    'Emagreceu sem estar tentando',
+    'Esquecimento que passou a atrapalhar o dia a dia',
+    'Desânimo, tristeza ou falta de interesse nas coisas',
+    'Dor que não passa (não é “coisa da idade”)',
+    'Sem vacina da gripe na última campanha'
+  ],[
+    'Confusão que começou de repente',
+    'Queda com dor forte, sem conseguir levantar ou com batida na cabeça'
+  ])}
+  <div class="footer"><span>Fichário de campo do ACS • material de apoio</span><span>Sinais de alerta • página 3 de 4</span></div>
+</div>
+<div class="sheet-side alert-page">
+  <span class="badge">Sinais de alerta • página 4 de 4</span>
+  ${alertGroup('PESSOA ACAMADA',[
+    'Vermelhidão que não some nas costas, quadril ou calcanhares',
+    'Ferida nova ou ferida que piorou',
+    'Assadura nas dobras ou nas nádegas',
+    'Urina ou fezes com cor ou cheiro diferente',
+    'Recusa para comer ou beber',
+    'Tosse ou engasgo ao comer ou beber',
+    'Cuidador exausto ou sem condições'
+  ],[
+    'Falta de ar forte',
+    'Pessoa desacordada ou muito difícil de acordar'
+  ])}
+  ${alertGroup('MULHER DE 25 A 64 ANOS',[
+    'Preventivo atrasado ou nunca feito',
+    'Resultado de exame não levado à unidade',
+    'Sangramento fora da menstruação ou depois da relação',
+    'Sangramento depois da menopausa',
+    'Caroço na mama ou na axila',
+    'Saída de líquido pelo mamilo ou mudança na pele da mama'
+  ],[
+    'Sangramento vaginal muito forte'
+  ])}
+  <div class="quick-record"><b>COMUNICAÇÃO À EQUIPE</b><span>Profissional: __________________________</span><span>Horário: __________</span></div>
+  <div class="alert-instructions"><b>Lembrete:</b> o ACS identifica e comunica. Não oriente remédio nem tratamento. Em urgência, priorize o atendimento imediato.</div>
+  <div class="note">Material de apoio independente, sem vínculo com o Ministério da Saúde ou o SUS. Conteúdo organizado a partir do material de referência fornecido.</div>
+  <div class="footer"><span>Fichário de campo do ACS • material de apoio</span><span>Sinais de alerta • página 4 de 4</span></div>
+</div>`;
+
+
+const avisoCard=()=>`<article class="aviso-card">
+  <div>
+    <div class="aviso-top">
+      <div class="aviso-kicker">Comunicação com a família</div>
+      <div class="aviso-title">AVISO DE VISITA DOMICILIAR</div>
+    </div>
+    <div class="aviso-message">
+      O Agente Comunitário de Saúde esteve nesta residência no dia
+      <input class="aviso-input aviso-date" type="text" placeholder="____/____/______" aria-label="Data da visita">,
+      às <input class="aviso-input aviso-hour" type="text" placeholder="____:____" aria-label="Horário da visita"> horas,
+      para tratar dos seguintes assuntos:
+    </div>
+    <div class="aviso-checks">
+      <label><input type="checkbox"> Visita periódica</label>
+      <label><input type="checkbox"> Consultas e exames</label>
+      <label><input type="checkbox"> Cadastro ou atualização de informações</label>
+      <label><input type="checkbox"> Outros assuntos</label>
+    </div>
+    <div class="aviso-message aviso-noanswer">No entanto, não havia ninguém disponível para atender.</div>
+    <div class="aviso-highlight">O ACS realizará uma nova tentativa de visita em até 30 dias. As visitas domiciliares são realizadas, no mínimo, uma vez por mês.</div>
+  </div>
+  <div class="aviso-details">
+    <div class="aviso-contact-title">Em caso de dúvidas, entre em contato:</div>
+    <div class="aviso-field"><b>ACS:</b><input class="aviso-input" type="text" placeholder="Nome do agente"></div>
+    <div class="aviso-field"><b>Telefone:</b><input class="aviso-input" type="text" placeholder="(____) _____-_____"></div>
+    <div class="aviso-field"><b>UBS:</b><span class="aviso-fixed-phone">0800 032 1020</span></div>
+  </div>
+</article>`;
+const apresentacaoCard=()=>`<article class="apresentacao-card">
+  <div>
+    <div class="apres-top">
+      <div class="apres-brand"><span class="apres-symbol">⌂</span><span>AGENTE COMUNITÁRIO<br>DE SAÚDE</span></div>
+      <div class="apres-greeting">Olá, família!</div>
+    </div>
+    <div class="apres-eyebrow">Cuidado, acolhimento e saúde perto de você</div>
+    <h3 class="apres-heading">Sou o(a) novo(a) Agente Comunitário(a) de Saúde da sua área.</h3>
+    <p class="apres-subtitle">Quero me apresentar e estar mais perto de você e da sua família!</p>
+    <div class="apres-name"><span class="apres-name-icon">●</span><span class="apres-name-label">Meu nome é:</span><input type="text" aria-label="Nome do ACS"></div>
+  </div>
+  <div>
+    <div class="apres-body">
+      <div class="apres-copy">Estarei visitando sua residência regularmente para acompanhar a saúde da sua família, compartilhar orientações, identificar necessidades e facilitar o acesso aos serviços da <strong>Unidade Básica de Saúde.</strong></div>
+      <div class="apres-frequency"><div class="symbol">▣</div><p>As visitas domiciliares são realizadas, no mínimo, <strong>uma vez por mês.</strong></p></div>
+    </div>
+    <div class="apres-contact">
+      <div><div class="apres-contact-label">Fale comigo</div><div class="apres-phone">☎ <input type="text" aria-label="Telefone do ACS"></div></div>
+      <div class="apres-ubs"><div class="apres-contact-label">Dúvidas e informações</div><strong>UBS • 0800 032 1020</strong></div>
+    </div>
+    <div class="apres-footnote">Conte comigo. Será um prazer cuidar da saúde da nossa comunidade!</div>
+  </div>
+</article>`;
+const apresentacao=`<div class="apresentacao-intro"><span class="badge">Cartão de apresentação do ACS</span><div class="note green">Preencha seu nome e telefone pelo computador antes de imprimir. São quatro cartões por folha A4, um em cada faixa da página, prontos para recortar.</div></div><div class="apresentacao-stack">${Array.from({length:4},()=>apresentacaoCard()).join('')}</div>`;
+
+const aviso=`<div class="aviso-intro"><span class="badge">Bilhete para deixar no domicílio</span><div class="note green">Esta página contém seis bilhetes. Você pode preencher os campos e marcar os assuntos pelo computador antes de imprimir, ou deixar em branco para preencher à mão.</div></div><div class="aviso-grid">${Array.from({length:6},()=>avisoCard()).join('')}</div>`;
+
 const data=[
 ['familia','Organização do território','Ficha da família e do domicílio','Identificação única da família, composição do domicílio, condições observadas e organização do acompanhamento pelo ACS.',family],
 ['equipe','Integração do cuidado','Comunicação à equipe de saúde','Registre situação observada, ações do ACS, profissional comunicado, retorno e plano combinado.',equipe],
@@ -101,7 +447,10 @@ const data=[
 ['hipertensao','C5 • pessoa com hipertensão','Ficha de acompanhamento — hipertensão','Controle de consulta, pressão arterial, antropometria e visitas domiciliares.',hipertensao],
 ['idosa','C6 • pessoa idosa','Ficha de acompanhamento da pessoa idosa','Visitas, consulta, registros de peso e altura, vacina influenza e necessidades de apoio.',idosa],
 ['mulher','C7 • saúde da mulher','Ficha de acompanhamento — saúde da mulher','Busca ativa, orientação e acompanhamento dos rastreamentos e da saúde sexual/reprodutiva.',mulher],
-['domiciliada','Acompanhamento complementar','Ficha de acompanhamento — pessoa acamada/domiciliada','Organização de visitas, rede de apoio, barreiras de acesso e demandas para a equipe.',domiciliada]
+['domiciliada','Acompanhamento complementar','Ficha de acompanhamento — pessoa acamada/domiciliada','Organização de visitas, rede de apoio, barreiras de acesso e demandas para a equipe.',domiciliada],
+['alertas','Segurança e comunicação','Sinais de alerta e urgência','Checklist de sinais observados ou relatados que exigem comunicação no mesmo dia ou procura imediata de urgência.',alertas],
+['aviso','Comunicação com a família','Bilhete de tentativa de visita','Bilhetes simples para deixar no domicílio quando não houver ninguém para receber o ACS.',aviso],
+['apresentacao','Boas-vindas à comunidade','Cartão de apresentação do ACS','Cartão para se apresentar às famílias da microárea, com nome e telefone de contato editáveis.',apresentacao]
 ]
 document.getElementById('pages').innerHTML=data.map(d=>ficha(...d)).join('');
 const buttons=[...document.querySelectorAll('.nav button')],pages=[...document.querySelectorAll('.ficha')];
