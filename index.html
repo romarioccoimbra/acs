@@ -1,6 +1,7 @@
 <!doctype html>
 <html lang="pt-BR"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
 <title>Fichário do ACS — fichas atualizadas</title>
+<link rel="manifest" href="manifest.webmanifest"><meta name="theme-color" content="#245b49"><link rel="icon" href="icon-192.png"><link rel="apple-touch-icon" href="icon-192.png">
 <style>
 :root{--g:#245b49;--g2:#36745d;--mint:#e8f1eb;--stone:#f1efe8;--ink:#26352d;--line:#cbd4cc}
 *{box-sizing:border-box}body{margin:0;background:#e9ece7;color:var(--ink);font:14px/1.35 Arial,sans-serif}.app{display:grid;grid-template-columns:235px 1fr;min-height:100vh}
@@ -11,8 +12,40 @@ main{padding:22px clamp(12px,3vw,36px) 45px;min-width:0}.toolbar{max-width:920px
 .grid{display:grid;grid-template-columns:repeat(12,minmax(0,1fr));gap:7px 11px}.field{grid-column:span 4}.field.s2{grid-column:span 2}.field.s3{grid-column:span 3}.field.s6{grid-column:span 6}.field.s8{grid-column:span 8}.field.full{grid-column:1/-1}label{display:block;font-size:9px;color:#59675e;font-weight:bold;text-transform:uppercase;letter-spacing:.3px;margin-bottom:3px}
 input[type=text],input[type=date],input[type=number],textarea,select{width:100%;font:12px Arial,sans-serif;color:var(--ink);border:0;border-bottom:1px solid #9eaaa1;padding:5px 3px;background:white;outline:none}textarea{border:1px solid var(--line);border-radius:4px;min-height:43px;resize:vertical;padding:6px}
 table{width:100%;border-collapse:collapse;font-size:10px;margin:5px 0 8px}th,td{border:1px solid var(--line);padding:5px;vertical-align:middle}th{background:var(--mint);color:var(--g);text-align:left;font-size:9px;text-transform:uppercase}td.center,th.center{text-align:center;width:42px}.box{display:inline-block;width:12px;height:12px;border:1px solid #829087;border-radius:2px}.blank td{height:25px}.note{background:var(--stone);border-left:3px solid #b7b4a7;border-radius:0 5px 5px 0;padding:7px 9px;font-size:10px;margin:8px 0}.note.green{background:#edf4ef;border-left-color:var(--g2)}.footer{display:flex;justify-content:space-between;gap:8px;border-top:1px solid var(--line);padding-top:7px;margin-top:15px;color:#758178;font-size:9px}
-@media(max-width:780px){.app{display:block}aside{height:auto;position:relative;padding:12px}.brand{padding-bottom:8px;margin-bottom:5px}.brand h1{font-size:19px}.nav{display:flex;overflow:auto;gap:4px}.navlabel,.sidefoot{display:none}.nav button{white-space:nowrap;width:auto;flex:0 0 auto}main{padding:12px}.ficha{padding:15px;min-height:0}.field,.field.s2,.field.s3,.field.s6,.field.s8{grid-column:span 6}}
+@media screen and (max-width:780px){.app{display:block}aside{height:auto;position:relative;padding:12px}.brand{padding-bottom:8px;margin-bottom:5px}.brand h1{font-size:19px}.nav{display:flex;overflow:auto;gap:4px}.navlabel,.sidefoot{display:none}.nav button{white-space:nowrap;width:auto;flex:0 0 auto}main{padding:12px}.ficha{padding:15px;min-height:0}.field,.field.s2,.field.s3,.field.s6,.field.s8{grid-column:span 6}}
 @page{size:A4 portrait;margin:10mm}
+
+.ficha.alertas>.footer{display:none}
+.action:focus-visible,.nav button:focus-visible{outline:2px solid #fff;outline-offset:1px}.action:focus-visible{outline-color:var(--g)}
+/* Modo preto e branco: sem áreas pintadas, texto preto, contornos fortes (economiza tinta e lê bem em impressora comum) */
+.pbopt{display:flex;align-items:center;gap:5px;font-size:12px;color:#59675e;font-weight:bold;text-transform:none;letter-spacing:0;margin:0 4px 0 0;cursor:pointer}.pbopt input{width:auto;margin:0}
+body.pb .ficha *{background:transparent!important;color:#000!important;border-color:#000!important;box-shadow:none!important;text-shadow:none!important;opacity:1!important}
+body.pb .ficha{background:#fff!important}
+body.pb .ficha input::placeholder{color:#555!important}
+body.pb .ficha .stitle:before{background:#000!important}
+body.pb .ficha th{background:#e4e4e4!important;font-weight:900}
+body.pb .ficha .box,body.pb .ficha .alert-check{border:1.5px solid #000!important}
+body.pb .ficha .badge{border:1px solid #000!important}
+body.pb .ficha .note,body.pb .ficha .aviso-highlight,body.pb .ficha .alert-instructions{border-left:3px solid #000!important}
+body.pb .ficha .alert-head{border-bottom:2px solid #000!important;font-weight:900}
+body.pb .ficha .alert-section.emergency{border-top:2px solid #000!important}
+body.pb .ficha .alert-guidance{font-weight:900}
+body.pb .ficha .category-mark,body.pb .ficha .section-mark{background:#000!important}
+body.pb .ficha .aviso-card,body.pb .ficha .apresentacao-card{border:1px dashed #000!important}
+body.pb .ficha .apres-side{border-right:2px solid #000!important}
+body.pb .ficha .apres-side:after{display:none}
+body.pb .ficha .apres-icon{border:2px solid #000;border-radius:12px;background:#fff!important}
+body.pb .ficha .apres-icon rect{fill:#fff}
+body.pb .ficha .apres-icon path{stroke:#000}
+body.pb .ficha .apres-monthly,body.pb .ficha .apres-contact{border:1px solid #000!important}
+body.pb .ficha .apres-name input,body.pb .ficha .apres-phone input{border-bottom:2px solid #000!important}
+body.pb .ficha .apres-greeting{font-weight:900}
+
+/* Impressão: o título verde do topo (hero) não sai em nenhuma ficha; cores dos demais elementos são mantidas */
+@media print{
+*{-webkit-print-color-adjust:exact;print-color-adjust:exact}
+.hero{display:none!important}
+}
 
 /* Aviso de visita: seis bilhetes por folha A4, com campos editáveis */
 .aviso-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:10px;margin-top:12px}
@@ -37,95 +70,49 @@ table{width:100%;border-collapse:collapse;font-size:10px;margin:5px 0 8px}th,td{
 .aviso-field .aviso-input{flex:1;width:100%;font-size:8px}
 .aviso-input::placeholder{color:#a1aaa3;opacity:1}
 
-/* Cartão de apresentação do ACS */
+/* Cartão de apresentação do ACS — mesmo desenho na tela e no papel (190 × 67 mm) */
 .apresentacao-intro{margin-bottom:12px}
 .apresentacao-stack{display:grid;gap:12px}
-.apresentacao-card{position:relative;isolation:isolate;overflow:hidden;min-height:430px;border:1px solid #d6e2d7;border-radius:18px;padding:25px 28px;background:linear-gradient(135deg,#fbfcf7 0%,#f1f6ed 58%,#e3efe4 100%);box-shadow:0 5px 18px #263b2d12;display:flex;flex-direction:column;justify-content:space-between}
-.apresentacao-card:before{content:"";position:absolute;z-index:-1;right:-55px;top:-85px;width:270px;height:230px;border-radius:48% 52% 55% 45%;background:#dcebd8;transform:rotate(-18deg)}
-.apresentacao-card:after{content:"";position:absolute;z-index:-1;left:-70px;bottom:-110px;width:260px;height:210px;border-radius:50%;background:#e1eddf}
-.apres-top{display:flex;justify-content:space-between;align-items:center;gap:14px}
-.apres-brand{display:flex;align-items:center;gap:10px;color:var(--g);font-weight:800;font-size:12px;line-height:1.2;letter-spacing:.3px}
-.apres-symbol{width:48px;height:48px;border-radius:15px;background:var(--g);color:white;display:grid;place-items:center;font-size:25px;box-shadow:0 4px 10px #245b4925}
-.apres-greeting{background:var(--g);color:white;border-radius:30px 30px 8px 30px;padding:10px 18px;font-size:23px;font-weight:800;letter-spacing:-.5px;white-space:nowrap}
-.apres-eyebrow{font-size:10px;letter-spacing:1.5px;text-transform:uppercase;color:#688071;font-weight:800;margin:17px 0 5px}
-.apres-heading{font-size:25px;line-height:1.08;color:#183e30;font-weight:800;max-width:650px;margin:0}
-.apres-subtitle{font-size:13px;line-height:1.5;color:#405449;margin:9px 0 14px;max-width:650px}
-.apres-name{display:flex;align-items:center;gap:12px;background:#e5efe1;border:1px solid #d3e2d1;border-radius:12px;padding:11px 14px;margin:2px 0 14px}
-.apres-name-icon{font-size:22px;color:var(--g)}
-.apres-name-label{font-size:11px;color:#42604e;font-weight:800;white-space:nowrap}
-.apres-name input,.apres-phone input{font:inherit;color:#1d3c2e;background:transparent;border:0;border-bottom:1.5px solid #6f8c77;border-radius:0;outline:none;padding:4px 3px;min-width:0}
-.apres-name input{flex:1;font-size:17px;font-weight:700}
-.apres-name input:focus,.apres-phone input:focus{background:#f6faf4;border-bottom:2px solid var(--g)}
-.apres-body{display:grid;grid-template-columns:1.5fr 1fr;gap:16px;align-items:stretch}
-.apres-copy{font-size:12px;line-height:1.55;color:#35483d;padding:3px 2px}
+.apresentacao-card{display:flex;box-sizing:border-box;min-height:240px;background:#fff;border:1px dashed #9eaaa1;border-radius:14px;overflow:hidden;box-shadow:0 3px 12px #263b2d12}
+.apres-side{position:relative;flex:0 0 205px;background:var(--g);color:#fff;padding:16px 16px 14px;display:flex;flex-direction:column;overflow:hidden}
+.apres-side:after{content:"";position:absolute;right:-55px;bottom:-65px;width:160px;height:160px;border-radius:50%;background:#ffffff14}
+.apres-side>*{position:relative;z-index:1}
+.apres-icon{width:38px;height:38px;display:block}
+.apres-role{font-size:9.5px;letter-spacing:1.2px;text-transform:uppercase;font-weight:700;line-height:1.3;margin-top:9px;opacity:.92}
+.apres-greeting{font-size:27px;line-height:1.05;font-weight:800;letter-spacing:-.5px;margin:auto 0 10px}
+.apres-monthly{background:#ffffff22;border-radius:8px;padding:7px 9px;font-size:10.5px;line-height:1.3}
+.apres-monthly strong{display:block;font-size:12px}
+.apres-main{flex:1;min-width:0;padding:14px 18px 10px;display:flex;flex-direction:column;gap:8px;background:linear-gradient(135deg,#fbfcf7 0%,#eef5eb 100%)}
+.apres-eyebrow{font-size:9px;letter-spacing:1.3px;text-transform:uppercase;color:#52735e;font-weight:800}
+.apres-heading{font-size:17px;line-height:1.15;color:#183e30;font-weight:800;margin:0;text-wrap:balance}
+.apres-name{display:flex;align-items:flex-end;gap:8px}
+.apres-name span{font-size:12px;font-weight:800;color:#42604e;white-space:nowrap;padding-bottom:5px}
+.apres-name input{flex:1;min-width:0;height:30px;font:inherit;font-size:16px;font-weight:700;color:#1d3c2e;background:transparent;border:0;border-bottom:2px solid #6f8c77;border-radius:0;padding:3px 2px;outline:none}
+.apres-copy{font-size:11px;line-height:1.4;color:#35483d;margin:0}
 .apres-copy strong{color:var(--g)}
-.apres-frequency{background:#fff;border:1px solid #d8e4d7;border-radius:12px;padding:12px;text-align:center;display:flex;flex-direction:column;justify-content:center}
-.apres-frequency .symbol{font-size:24px;color:var(--g);line-height:1;margin-bottom:5px}
-.apres-frequency p{font-size:11px;line-height:1.35;color:#43594a;margin:0}
-.apres-frequency strong{font-size:13px;color:var(--g)}
-.apres-contact{margin-top:14px;background:var(--g);color:white;border-radius:12px;padding:11px 14px;display:grid;grid-template-columns:1fr 1fr;gap:12px;align-items:center}
-.apres-contact-label{font-size:9px;letter-spacing:1px;text-transform:uppercase;color:#dcebe0;font-weight:800}
-.apres-phone{display:flex;align-items:center;gap:7px;font-size:12px;font-weight:700;margin-top:3px}
-.apres-phone input{width:100%;font-size:14px;color:white;border-bottom-color:#b8d0bf}
-.apres-phone input::placeholder{color:#d4e4d8}
-.apres-ubs{border-left:1px solid #ffffff55;padding-left:14px}
-.apres-ubs strong{display:block;font-size:16px;letter-spacing:.5px;margin-top:3px}
-.apres-footnote{font-size:8px;color:#6b7d70;text-align:right;margin-top:7px}
-@media(max-width:780px){.apresentacao-card{padding:19px;min-height:0}.apres-greeting{font-size:17px}.apres-heading{font-size:21px}.apres-body{grid-template-columns:1fr}.apres-contact{grid-template-columns:1fr}.apres-ubs{border-left:0;border-top:1px solid #ffffff55;padding:8px 0 0}}
-@media(max-width:780px){.aviso-grid{grid-template-columns:1fr}.aviso-card{min-height:220px}}
+.apres-contact{margin-top:auto;display:grid;grid-template-columns:1.1fr 1fr;gap:12px;align-items:end;background:#e5efe1;border:1px solid #d3e2d1;border-radius:10px;padding:6px 11px 7px}
+.apres-contact span{display:block;font-size:8.5px;letter-spacing:1px;text-transform:uppercase;color:#42604e;font-weight:800;margin-bottom:1px}
+.apres-phone{display:flex;flex-direction:column}
+.apres-phone input{width:100%;height:22px;font:inherit;font-size:14px;font-weight:700;color:#1d3c2e;background:transparent;border:0;border-bottom:1.5px solid #6f8c77;border-radius:0;padding:2px;outline:none}
+.apres-ubs{border-left:1px solid #b7cdb9;padding-left:12px}
+.apres-ubs strong{display:block;font-size:15px;letter-spacing:.3px;color:var(--g)}
+.apres-foot{font-size:9.5px;color:#6b7d70;text-align:right;margin:0}
+.apres-name input:focus,.apres-phone input:focus{background:#f6faf4;border-bottom-color:var(--g)}
+@media screen and (max-width:780px){.apresentacao-card{flex-direction:column}.apres-side{flex-basis:auto}.apres-greeting{margin:10px 0}.apres-contact{grid-template-columns:1fr}.apres-ubs{border-left:0;border-top:1px solid #b7cdb9;padding:6px 0 0}}
+@media screen and (max-width:780px){.aviso-grid{grid-template-columns:1fr}.aviso-card{min-height:220px}}
 
 @media print{
 @page{size:A4 portrait;margin:10mm}
-.printing .ficha.print-target.apresentacao{-webkit-print-color-adjust:exact!important;print-color-adjust:exact!important;display:block!important;position:relative!important;box-sizing:border-box!important;width:190mm!important;max-width:190mm!important;height:277mm!important;min-height:0!important;margin:0!important;padding:0!important;overflow:hidden!important;background:#fff!important}
-.printing .ficha.print-target.apresentacao>.hero,
-.printing .ficha.print-target.apresentacao>.footer,
-.printing .ficha.print-target.apresentacao .apresentacao-intro{display:none!important}
-.printing .ficha.print-target.apresentacao .apresentacao-stack{display:grid!important;box-sizing:border-box!important;width:190mm!important;height:277mm!important;margin:0!important;padding:0!important;grid-template-columns:1fr!important;grid-template-rows:repeat(4,1fr)!important;gap:3mm!important;align-content:stretch!important}
-.printing .ficha.print-target.apresentacao .apresentacao-card{display:flex!important;box-sizing:border-box!important;width:auto!important;height:auto!important;min-width:0!important;min-height:0!important;max-height:none!important;margin:0!important;padding:3mm 3.5mm!important;border:1px solid #cbdccf!important;border-radius:3mm!important;box-shadow:none!important;overflow:hidden!important;break-inside:avoid!important;page-break-inside:avoid!important}
-.printing .ficha.print-target.apresentacao .apresentacao-card{background:linear-gradient(120deg,#fbfcf7 0%,#eef5eb 100%)!important}
-.printing .ficha.print-target.apresentacao .apresentacao-card:before{display:block!important;content:""!important;position:absolute!important;z-index:-1!important;right:-18mm!important;top:-17mm!important;width:55mm!important;height:42mm!important;background:#dcebd8!important;border-radius:48% 52% 55% 45%!important;transform:rotate(-18deg)!important}
-.printing .ficha.print-target.apresentacao .apresentacao-card:after{display:block!important;content:""!important;position:absolute!important;z-index:-1!important;left:-15mm!important;bottom:-19mm!important;width:48mm!important;height:38mm!important;background:#e1eddf!important;border-radius:50%!important}
-.printing .ficha.print-target.apresentacao .apres-symbol,
-.printing .ficha.print-target.apresentacao .apres-greeting,
-.printing .ficha.print-target.apresentacao .apres-contact{background:#245b49!important;color:#fff!important;-webkit-print-color-adjust:exact!important;print-color-adjust:exact!important}
-.printing .ficha.print-target.apresentacao .apres-name{background:#e5efe1!important;border-color:#d3e2d1!important}
-.printing .ficha.print-target.apresentacao .apres-frequency{background:#fff!important;border-color:#d8e4d7!important}
-.printing .ficha.print-target.apresentacao .apres-heading{color:#183e30!important}
-.printing .ficha.print-target.apresentacao .apres-eyebrow{color:#52735e!important}
-.printing .ficha.print-target.apresentacao .apres-copy{color:#35483d!important}
-.printing .ficha.print-target.apresentacao .apres-contact-label{color:#dcebe0!important}
-.printing .ficha.print-target.apresentacao .apres-phone input{color:#fff!important;border-bottom-color:#b8d0bf!important}
-
-.printing .ficha.print-target.apresentacao .apres-top{gap:4px!important}
-.printing .ficha.print-target.apresentacao .apres-brand{font-size:6.5pt!important;gap:4px!important}
-.printing .ficha.print-target.apresentacao .apres-symbol{width:25px!important;height:25px!important;border-radius:7px!important;font-size:14px!important}
-.printing .ficha.print-target.apresentacao .apres-heading{font-size:8pt!important;line-height:1.08!important}
-.printing .ficha.print-target.apresentacao .apres-eyebrow{font-size:5pt!important;margin:4px 0 2px!important;letter-spacing:.5px!important}
-.printing .ficha.print-target.apresentacao .apres-subtitle{font-size:5.5pt!important;line-height:1.15!important;margin:2px 0 3px!important}
-.printing .ficha.print-target.apresentacao .apres-greeting{font-size:8pt!important;padding:4px 6px!important}
-.printing .ficha.print-target.apresentacao .apres-name{gap:4px!important;padding:3px 5px!important;margin:2px 0 3px!important}
-.printing .ficha.print-target.apresentacao .apres-name-icon{font-size:12px!important}
-.printing .ficha.print-target.apresentacao .apres-name-label{font-size:6.5pt!important}
-.printing .ficha.print-target.apresentacao .apres-name input{font-size:7pt!important;color:#183e30!important;border-bottom:1px solid #6f8c77!important}
-.printing .ficha.print-target.apresentacao .apres-body{grid-template-columns:1.3fr 1fr!important;gap:4px!important}
-.printing .ficha.print-target.apresentacao .apres-copy{font-size:5.5pt!important;line-height:1.2!important}
-.printing .ficha.print-target.apresentacao .apres-frequency{padding:4px!important}
-.printing .ficha.print-target.apresentacao .apres-frequency .symbol{font-size:14px!important;margin-bottom:2px!important}
-.printing .ficha.print-target.apresentacao .apres-frequency p{font-size:5.5pt!important;line-height:1.15!important}
-.printing .ficha.print-target.apresentacao .apres-frequency strong{font-size:6pt!important}
-.printing .ficha.print-target.apresentacao .apres-contact{padding:3px 4px!important;margin-top:3px!important;gap:3px!important}
-.printing .ficha.print-target.apresentacao .apres-contact-label{font-size:5pt!important}
-.printing .ficha.print-target.apresentacao .apres-phone{font-size:6pt!important;gap:3px!important}
-.printing .ficha.print-target.apresentacao .apres-phone input{font-size:6pt!important}
-.printing .ficha.print-target.apresentacao .apres-ubs{padding-left:5px!important}
-.printing .ficha.print-target.apresentacao .apres-ubs strong{font-size:7pt!important}
-.printing .ficha.print-target.apresentacao .apres-footnote{font-size:4pt!important;margin-top:1px!important}
+.printing .ficha.print-target.apresentacao{display:block!important;box-sizing:border-box;width:190mm;max-width:190mm;height:276mm;min-height:0!important;margin:0!important;padding:0!important;overflow:hidden;background:#fff!important}
+.printing .ficha.print-target.apresentacao>.hero,.printing .ficha.print-target.apresentacao>.footer,.printing .ficha.print-target.apresentacao .apresentacao-intro{display:none!important}
+.printing .ficha.print-target.apresentacao .apresentacao-stack{display:grid;width:190mm;height:276mm;grid-template-columns:1fr;grid-template-rows:repeat(4,1fr);gap:3mm}
+.printing .ficha.print-target.apresentacao .apresentacao-card{min-height:0;height:100%;border-radius:3mm;box-shadow:none;break-inside:avoid;page-break-inside:avoid}
 }
 @media print{html,body{background:white!important;margin:0!important;font-size:10pt}.app{display:block}aside,.toolbar{display:none!important}main{padding:0!important}.ficha{display:none!important;box-shadow:none!important;border-radius:0!important;min-height:0!important;max-width:none!important;margin:0!important;padding:0!important}.printing .ficha.print-target.aviso{max-width:none!important;width:100%!important;padding:0!important;margin:0!important;min-height:0!important}
 .printing .ficha.print-target.aviso>.hero,.printing .ficha.print-target.aviso>.footer{display:none!important}
 .printing .ficha.print-target.aviso .aviso-intro{display:none!important}
-.printing .ficha.print-target.aviso .aviso-grid{grid-template-columns:repeat(2,minmax(0,1fr));grid-template-rows:repeat(3,1fr);gap:0;margin:0;width:100%;height:277mm}
-.printing .ficha.print-target.aviso .aviso-card{box-sizing:border-box;width:100%;height:92.3mm;min-height:0;border:1px dashed #9eaaa1;border-radius:0;padding:4mm 4.5mm 3.5mm;box-shadow:none;overflow:hidden}
+.printing .ficha.print-target.aviso .aviso-grid{grid-template-columns:repeat(2,minmax(0,1fr));grid-template-rows:repeat(3,1fr);gap:0;margin:0;width:100%;height:276mm}
+.printing .ficha.print-target.aviso .aviso-card{box-sizing:border-box;width:100%;height:92mm;min-height:0;border:1px dashed #9eaaa1;border-radius:0;padding:4mm 4.5mm 3.5mm;box-shadow:none;overflow:hidden}
 .printing .ficha.print-target.aviso .aviso-title{font-size:9pt;margin:2px 0}
 .printing .ficha.print-target.aviso .aviso-message{font-size:6.2pt;line-height:1.2;margin:3px 0}
 .printing .ficha.print-target.aviso .aviso-checks{font-size:5.8pt;gap:2px 5px;margin:3px 0}
@@ -187,14 +174,16 @@ table{width:100%;border-collapse:collapse;font-size:10px;margin:5px 0 8px}th,td{
 <button data-id="idosa">Pessoa idosa <span class="tag">C6</span></button><button data-id="mulher">Saúde da mulher <span class="tag">C7</span></button>
 <div class="navlabel">Acompanhamento complementar</div><button data-id="domiciliada">Acamada/domiciliada</button><button data-id="alertas">Sinais de alerta e urgência</button><button data-id="aviso">Aviso de visita</button><button data-id="apresentacao">Cartão de apresentação</button></nav>
 </aside>
-<main><div class="toolbar"><div class="hint">Selecione uma ficha no menu. Na impressão, somente a ficha aberta será enviada para a impressora ou PDF.</div><div class="actions"><button class="action" onclick="limpar()">Limpar ficha</button><button class="action primary" onclick="printCurrent()">Imprimir ficha atual</button></div></div>
+<main><div class="toolbar"><div class="hint">Selecione uma ficha no menu. Na impressão, somente a ficha aberta será enviada para a impressora ou PDF.</div><div class="actions"><label class="pbopt" title="Impressão sem cores: textos pretos, sem áreas pintadas. Também mostra como vai ficar na tela."><input type="checkbox" id="pb"> Preto e branco</label><button class="action" onclick="limpar()">Limpar ficha</button><button class="action primary" onclick="printCurrent()">Imprimir ficha atual</button></div></div>
 <div id="pages"></div></main></div>
 <script>
-const field=(name,size='')=>`<div class="field ${size}"><label>${name}</label><input type="text"></div>`;
-const datefield=(name,size='')=>`<div class="field ${size}"><label>${name}</label><input type="date"></div>`;
-const area=(name,size='full')=>`<div class="field ${size}"><label>${name}</label><textarea></textarea></div>`;
+let _uid=0;const uid=()=>'c'+(++_uid);
+const UBS_TELEFONE='0800 032 1020';
+const field=(name,size='')=>{const i=uid();return `<div class="field ${size}"><label for="${i}">${name}</label><input id="${i}" type="text"></div>`};
+const datefield=(name,size='')=>{const i=uid();return `<div class="field ${size}"><label for="${i}">${name}</label><input id="${i}" type="text" data-mask="date" inputmode="numeric" maxlength="10" placeholder="dd/mm/aaaa"></div>`};
+const area=(name,size='full')=>{const i=uid();return `<div class="field ${size}"><label for="${i}">${name}</label><textarea id="${i}"></textarea></div>`};
 const title=t=>`<div class="stitle">${t}</div>`;
-const table=(headers,rows,cls='')=>`<table class="${cls}"><thead><tr>${headers.map((h,i)=>`<th ${i>0&&h==='OK'||h==='Pendente'?'class="center"':''}>${h}</th>`).join('')}</tr></thead><tbody>${rows.map(r=>`<tr>${r.map((c,i)=>`<td ${i>0&&(c==='□'||c==='☐')?'class="center"':''}>${c}</td>`).join('')}</tr>`).join('')}</tbody></table>`;
+const table=(headers,rows,cls='')=>`<table class="${cls}"><thead><tr>${headers.map((h,i)=>`<th ${h==='OK'||h==='Pendente'?'class="center"':''}>${h}</th>`).join('')}</tr></thead><tbody>${rows.map(r=>`<tr>${r.map((c,i)=>`<td ${i>0&&(c==='□'||c==='☐')?'class="center"':''}>${c}</td>`).join('')}</tr>`).join('')}</tbody></table>`;
 const checkRows=items=>table(['Meta / ponto a acompanhar','OK','Pendente','Data / observação'],items.map((x,i)=>[String.fromCharCode(65+i)+') '+x,'<span class="box"></span>','<span class="box"></span>','']));
 const visitRows=(n=5)=>table(['Data','Relato / orientação / observação','Ação ou retorno combinado'],Array.from({length:n},()=>['','','']),'blank');
 const ficha=(id,kicker,name,desc,body)=>`<section class="ficha ${id==='familia'?'active':''} ${['c2','c3'].includes(id)?'duplex':''} ${id==='alertas'?'alertas':''} ${id==='aviso'?'aviso':''} ${id==='apresentacao'?'apresentacao':''}" id="${id}" data-title="${name}"><div class="hero"><small>${kicker}</small><h2>${name}</h2><p>${desc}</p></div>${body}<div class="footer"><span>Fichário de campo do ACS • material de apoio</span><span>${name}</span></div></section>`;
@@ -408,30 +397,26 @@ const avisoCard=()=>`<article class="aviso-card">
     <div class="aviso-contact-title">Em caso de dúvidas, entre em contato:</div>
     <div class="aviso-field"><b>ACS:</b><input class="aviso-input" type="text" placeholder="Nome do agente"></div>
     <div class="aviso-field"><b>Telefone:</b><input class="aviso-input" type="text" placeholder="(____) _____-_____"></div>
-    <div class="aviso-field"><b>UBS:</b><span class="aviso-fixed-phone">0800 032 1020</span></div>
+    <div class="aviso-field"><b>UBS:</b><span class="aviso-fixed-phone">${UBS_TELEFONE}</span></div>
   </div>
 </article>`;
 const apresentacaoCard=()=>`<article class="apresentacao-card">
-  <div>
-    <div class="apres-top">
-      <div class="apres-brand"><span class="apres-symbol">⌂</span><span>AGENTE COMUNITÁRIO<br>DE SAÚDE</span></div>
-      <div class="apres-greeting">Olá, família!</div>
-    </div>
+  <div class="apres-side">
+    <svg class="apres-icon" viewBox="0 0 48 48" aria-hidden="true"><rect width="48" height="48" rx="14" fill="#fff"/><path d="M24 13v22M13 24h22" stroke="#245b49" stroke-width="6" stroke-linecap="round"/></svg>
+    <div class="apres-role">Agente Comunitário<br>de Saúde</div>
+    <div class="apres-greeting">Olá,<br>família!</div>
+    <div class="apres-monthly">Visitas em casa, no mínimo,<strong>uma vez por mês</strong></div>
+  </div>
+  <div class="apres-main">
     <div class="apres-eyebrow">Cuidado, acolhimento e saúde perto de você</div>
     <h3 class="apres-heading">Sou o(a) novo(a) Agente Comunitário(a) de Saúde da sua área.</h3>
-    <p class="apres-subtitle">Quero me apresentar e estar mais perto de você e da sua família!</p>
-    <div class="apres-name"><span class="apres-name-icon">●</span><span class="apres-name-label">Meu nome é:</span><input type="text" aria-label="Nome do ACS"></div>
-  </div>
-  <div>
-    <div class="apres-body">
-      <div class="apres-copy">Estarei visitando sua residência regularmente para acompanhar a saúde da sua família, compartilhar orientações, identificar necessidades e facilitar o acesso aos serviços da <strong>Unidade Básica de Saúde.</strong></div>
-      <div class="apres-frequency"><div class="symbol">▣</div><p>As visitas domiciliares são realizadas, no mínimo, <strong>uma vez por mês.</strong></p></div>
-    </div>
+    <div class="apres-name"><span>Meu nome é:</span><input type="text" aria-label="Nome do ACS"></div>
+    <p class="apres-copy">Quero me apresentar e estar mais perto de você e da sua família! Estarei visitando sua residência regularmente para acompanhar a saúde da sua família, compartilhar orientações, identificar necessidades e facilitar o acesso aos serviços da <strong>Unidade Básica de Saúde.</strong></p>
     <div class="apres-contact">
-      <div><div class="apres-contact-label">Fale comigo</div><div class="apres-phone">☎ <input type="text" aria-label="Telefone do ACS"></div></div>
-      <div class="apres-ubs"><div class="apres-contact-label">Dúvidas e informações</div><strong>UBS • 0800 032 1020</strong></div>
+      <div class="apres-phone"><span>☎ Fale comigo</span><input type="text" aria-label="Telefone do ACS"></div>
+      <div class="apres-ubs"><span>Dúvidas e informações</span><strong>UBS • ${UBS_TELEFONE}</strong></div>
     </div>
-    <div class="apres-footnote">Conte comigo. Será um prazer cuidar da saúde da nossa comunidade!</div>
+    <p class="apres-foot">Conte comigo. Será um prazer cuidar da saúde da nossa comunidade!</p>
   </div>
 </article>`;
 const apresentacao=`<div class="apresentacao-intro"><span class="badge">Cartão de apresentação do ACS</span><div class="note green">Preencha seu nome e telefone pelo computador antes de imprimir. São quatro cartões por folha A4, um em cada faixa da página, prontos para recortar.</div></div><div class="apresentacao-stack">${Array.from({length:4},()=>apresentacaoCard()).join('')}</div>`;
@@ -454,8 +439,24 @@ const data=[
 ]
 document.getElementById('pages').innerHTML=data.map(d=>ficha(...d)).join('');
 const buttons=[...document.querySelectorAll('.nav button')],pages=[...document.querySelectorAll('.ficha')];
-buttons.forEach(b=>b.addEventListener('click',()=>{pages.forEach(p=>p.classList.toggle('active',p.id===b.dataset.id));buttons.forEach(x=>x.classList.toggle('active',x===b));window.scrollTo({top:0,behavior:'smooth'})}));
-function printCurrent(){const p=document.querySelector('.ficha.active');pages.forEach(x=>x.classList.remove('print-target'));p.classList.add('print-target');document.body.classList.add('printing');window.print()}
+function abrir(id,rolar=true){const alvo=pages.find(p=>p.id===id)||pages[0];pages.forEach(p=>p.classList.toggle('active',p===alvo));buttons.forEach(b=>{const on=b.dataset.id===alvo.id;b.classList.toggle('active',on);if(on)b.setAttribute('aria-current','page');else b.removeAttribute('aria-current')});if(rolar)window.scrollTo({top:0,behavior:'smooth'})}
+/* Cada ficha tem um link próprio (ex.: index.html#diabetes) */
+buttons.forEach(b=>b.addEventListener('click',()=>{abrir(b.dataset.id);if(location.hash!=='#'+b.dataset.id)location.hash=b.dataset.id}));
+window.addEventListener('hashchange',()=>{const id=location.hash.slice(1),a=document.querySelector('.ficha.active');if(!a||a.id!==id)abrir(id)});
+abrir(location.hash.slice(1),false);
+
+function prepararImpressao(){const p=document.querySelector('.ficha.active');pages.forEach(x=>x.classList.remove('print-target'));p.classList.add('print-target');document.body.classList.add('printing')}
+function printCurrent(){prepararImpressao();window.print()}
+/* Também vale para Ctrl+P / menu do navegador: imprime só a ficha aberta */
+window.addEventListener('beforeprint',prepararImpressao);
 window.addEventListener('afterprint',()=>{document.body.classList.remove('printing');pages.forEach(x=>x.classList.remove('print-target'))});
-function limpar(){const p=document.querySelector('.ficha.active');if(!confirm('Limpar os campos preenchidos nesta ficha? Esta ação não pode ser desfeita.'))return;p.querySelectorAll('input,textarea,select').forEach(x=>x.value='')}
+
+/* Máscara de data dd/mm/aaaa */
+document.getElementById('pages').addEventListener('input',e=>{if(e.target.dataset.mask==='date'){const d=e.target.value.replace(/\D/g,'').slice(0,8);e.target.value=d.length>4?d.slice(0,2)+'/'+d.slice(2,4)+'/'+d.slice(4):d.length>2?d.slice(0,2)+'/'+d.slice(2):d}});
+
+const campos=p=>[...p.querySelectorAll('input,textarea,select')];
+
+function limpar(){const p=document.querySelector('.ficha.active');if(!confirm('Limpar os campos preenchidos nesta ficha? Esta ação não pode ser desfeita.'))return;campos(p).forEach(x=>{if(x.type==='checkbox')x.checked=false;else x.value=''})}
+
+document.getElementById('pb').addEventListener('change',e=>document.body.classList.toggle('pb',e.target.checked));
 </script></body></html>
