@@ -56,7 +56,7 @@ body.pb .ficha .apres-greeting{font-weight:900}
 .aviso-message{font-size:9px;line-height:1.35;color:var(--ink);margin:5px 0}
 .aviso-input{font:inherit;color:var(--ink);background:transparent;border:0;border-bottom:1px solid #87948a;border-radius:0;padding:1px 2px;min-width:0;outline:none}
 .aviso-input:focus{background:#f1f6f2;border-bottom:2px solid var(--g2)}
-.aviso-date{width:78px}.aviso-hour{width:43px}
+.aviso-card .aviso-date{width:84px;flex:none}.aviso-card .aviso-hour{width:50px;flex:none}
 .aviso-checks{display:grid;grid-template-columns:1fr 1fr;gap:4px 8px;margin:6px 0;font-size:8px;line-height:1.2}
 .aviso-checks label{display:flex;align-items:flex-start;gap:4px}
 .aviso-checks input{width:11px;height:11px;margin:0;accent-color:var(--g);flex:0 0 11px}
@@ -82,13 +82,13 @@ body.pb .ficha .apres-greeting{font-weight:900}
 .apres-greeting{font-size:27px;line-height:1.05;font-weight:800;letter-spacing:-.5px;margin:auto 0 10px}
 .apres-monthly{background:#ffffff22;border-radius:8px;padding:7px 9px;font-size:10.5px;line-height:1.3}
 .apres-monthly strong{display:block;font-size:12px}
-.apres-main{flex:1;min-width:0;padding:14px 18px 10px;display:flex;flex-direction:column;gap:8px;background:linear-gradient(135deg,#fbfcf7 0%,#eef5eb 100%)}
+.apres-main{flex:1;min-width:0;padding:14px 18px 9px;display:flex;flex-direction:column;gap:9px;background:linear-gradient(135deg,#fbfcf7 0%,#eef5eb 100%)}
 .apres-eyebrow{font-size:9px;letter-spacing:1.3px;text-transform:uppercase;color:#52735e;font-weight:800}
-.apres-heading{font-size:17px;line-height:1.15;color:#183e30;font-weight:800;margin:0;text-wrap:balance}
+.apres-heading{font-size:20px;line-height:1.15;color:#183e30;font-weight:800;margin:0;text-wrap:balance}
 .apres-name{display:flex;align-items:flex-end;gap:8px}
-.apres-name span{font-size:12px;font-weight:800;color:#42604e;white-space:nowrap;padding-bottom:5px}
+.apres-name span{font-size:13px;font-weight:800;color:#42604e;white-space:nowrap;padding-bottom:5px}
 .apres-name input{flex:1;min-width:0;height:30px;font:inherit;font-size:16px;font-weight:700;color:#1d3c2e;background:transparent;border:0;border-bottom:2px solid #6f8c77;border-radius:0;padding:3px 2px;outline:none}
-.apres-copy{font-size:11px;line-height:1.4;color:#35483d;margin:0}
+.apres-copy{font-size:12px;line-height:1.45;color:#35483d;margin:0}
 .apres-copy strong{color:var(--g)}
 .apres-contact{margin-top:auto;display:grid;grid-template-columns:1.1fr 1fr;gap:12px;align-items:end;background:#e5efe1;border:1px solid #d3e2d1;border-radius:10px;padding:6px 11px 7px}
 .apres-contact span{display:block;font-size:8.5px;letter-spacing:1px;text-transform:uppercase;color:#42604e;font-weight:800;margin-bottom:1px}
@@ -379,10 +379,9 @@ const avisoCard=()=>`<article class="aviso-card">
       <div class="aviso-title">AVISO DE VISITA DOMICILIAR</div>
     </div>
     <div class="aviso-message">
-      O Agente Comunitário de Saúde esteve nesta residência no dia
+      Passei na sua casa no dia
       <input class="aviso-input aviso-date" type="text" placeholder="____/____/______" aria-label="Data da visita">,
-      às <input class="aviso-input aviso-hour" type="text" placeholder="____:____" aria-label="Horário da visita"> horas,
-      para tratar dos seguintes assuntos:
+      às <input class="aviso-input aviso-hour" type="text" placeholder="____:____" aria-label="Horário da visita"> h, para falar sobre:
     </div>
     <div class="aviso-checks">
       <label><input type="checkbox"> Visita periódica</label>
@@ -390,8 +389,8 @@ const avisoCard=()=>`<article class="aviso-card">
       <label><input type="checkbox"> Cadastro ou atualização de informações</label>
       <label><input type="checkbox"> Outros assuntos</label>
     </div>
-    <div class="aviso-message aviso-noanswer">No entanto, não havia ninguém disponível para atender.</div>
-    <div class="aviso-highlight">O ACS realizará uma nova tentativa de visita em até 30 dias. As visitas domiciliares são realizadas, no mínimo, uma vez por mês.</div>
+    <div class="aviso-message aviso-noanswer">Não encontrei ninguém em casa.</div>
+    <div class="aviso-highlight">Voltarei em até 30 dias. As visitas domiciliares são realizadas, no mínimo, uma vez por mês.</div>
   </div>
   <div class="aviso-details">
     <div class="aviso-contact-title">Em caso de dúvidas, entre em contato:</div>
@@ -408,15 +407,14 @@ const apresentacaoCard=()=>`<article class="apresentacao-card">
     <div class="apres-monthly">Visitas em casa, no mínimo,<strong>uma vez por mês</strong></div>
   </div>
   <div class="apres-main">
-    <div class="apres-eyebrow">Cuidado, acolhimento e saúde perto de você</div>
-    <h3 class="apres-heading">Sou o(a) novo(a) Agente Comunitário(a) de Saúde da sua área.</h3>
+    <h3 class="apres-heading">Sou o novo Agente Comunitário de Saúde da sua área.</h3>
     <div class="apres-name"><span>Meu nome é:</span><input type="text" aria-label="Nome do ACS"></div>
-    <p class="apres-copy">Quero me apresentar e estar mais perto de você e da sua família! Estarei visitando sua residência regularmente para acompanhar a saúde da sua família, compartilhar orientações, identificar necessidades e facilitar o acesso aos serviços da <strong>Unidade Básica de Saúde.</strong></p>
+    <p class="apres-copy">Quero me apresentar e estar mais perto de você e da sua família! Estarei visitando sua residência regularmente para acompanhar a saúde da sua família, compartilhar orientações, tirar dúvidas e ajudar no acesso à <strong>Unidade Básica de Saúde.</strong></p>
     <div class="apres-contact">
       <div class="apres-phone"><span>☎ Fale comigo</span><input type="text" aria-label="Telefone do ACS"></div>
       <div class="apres-ubs"><span>Dúvidas e informações</span><strong>UBS • ${UBS_TELEFONE}</strong></div>
     </div>
-    <p class="apres-foot">Conte comigo. Será um prazer cuidar da saúde da nossa comunidade!</p>
+    <p class="apres-foot">Conte comigo!</p>
   </div>
 </article>`;
 const apresentacao=`<div class="apresentacao-intro"><span class="badge">Cartão de apresentação do ACS</span><div class="note green">Preencha seu nome e telefone pelo computador antes de imprimir. São quatro cartões por folha A4, um em cada faixa da página, prontos para recortar.</div></div><div class="apresentacao-stack">${Array.from({length:4},()=>apresentacaoCard()).join('')}</div>`;
